@@ -20,11 +20,14 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<AppUser> users = new ArrayList<AppUser>();
+    private ArrayList<AppGroup> groups = new ArrayList<>();
+
     private SimpleAdapter adapter;
     private RecyclerView adapterUsers;
     private Button boton1, boton2, boton3, boton5, boton4;
     private int pos, posLay;
     private LinearLayout layoutPadre;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +51,25 @@ public class MainActivity extends AppCompatActivity {
             users.add(newUser);
         }
 
+        for (int i = 0; i < 5; i++) {
+            AppGroup newGroup = new AppGroup();
+            groups.add(newGroup);
+        }
+
 
         // Insercion de datos en users y creacion
         adapter = new SimpleAdapter(users, false);
         adapterUsers.setAdapter(adapter);
 
+
     }
+
+
+
+
+
+
+
 
 
     public void boton1 (View v){
