@@ -76,9 +76,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         //Vamos obteniendo mail por mail
         final AppUser user = this.users.get(position);
         //Enlazamos los elementos de la vista con el modelo
-        holder.name.setText("name"+user.name);
-        holder.id.setText("-id-");
-        holder.deleteUser.setText("Remove");
+        holder.name.setText("name"+user.name+position);
+        holder.id.setText("-id-+position");
+        holder.deleteUser.setText("Remove"+position);
 
         holder.deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override

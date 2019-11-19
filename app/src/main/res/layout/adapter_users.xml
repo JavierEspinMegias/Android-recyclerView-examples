@@ -13,13 +13,10 @@
 
     <ImageView
         android:id="@+id/image_view_adapter"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.6"
-        app:srcCompat="@mipmap/android_photo"
+        app:srcCompat="@mipmap/android_photo_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

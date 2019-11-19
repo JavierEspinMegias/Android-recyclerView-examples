@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,5 +103,10 @@ public class MainActivity extends AppCompatActivity {
             adapterUsers.setAdapter(adapter);
             pos = 0;
         }
+    }
+
+    public void goRandom (View v){
+        Random rnd = new Random();
+        adapterUsers.scrollToPosition(rnd.nextInt(users.size()));
     }
 }
