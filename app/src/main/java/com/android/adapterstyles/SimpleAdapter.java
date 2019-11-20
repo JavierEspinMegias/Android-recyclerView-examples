@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         public TextView id;
         private Button deleteUser;
         public ImageView imageUser;
+        public LinearLayout background;
 
         //Su constructor debera enlazar las variables del controlador con la vista
         public ViewHolder(final View itemView) {
@@ -57,6 +59,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             this.id = (TextView) itemView.findViewById(R.id.user_id);
             this.deleteUser=(Button)itemView.findViewById(R.id.custom_buttom_1);
             this.imageUser = (ImageView)itemView.findViewById(R.id.image_view_adapter);
+            this.background = (LinearLayout)itemView.findViewById(R.id.adapter_linear_layout);
         }
     }
 
@@ -65,6 +68,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     public SimpleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+
         //Especificamos el fichero XML que se utilizará como vista
         View contactView = inflater.inflate(R.layout.adapter_users, parent, false);
         ViewHolder viewHolder = new ViewHolder(contactView);
@@ -78,28 +82,35 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull SimpleAdapter.ViewHolder holder, final int position) {
 
-        //Vamos obteniendo mail por mail
-        final AppUser user = this.users.get(position);
-        //Enlazamos los elementos de la vista con el modelo
-        holder.name.setText("name"+user.name+position);
-        holder.id.setText("-id-+position");
-        holder.deleteUser.setText("Remove"+position);
 
-        holder.deleteUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                users.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(0, users.size());
-            }
-        });
-
-        if (isGroup){
+        if (this.isGroup){
             final  AppGroup group = this.groups.get(position);
             holder.name.setText(group.getName()+position);
+            holder.name.setTextSize(24);
+            holder.background.setBackgroundColor(getRandomColor());
+            holder.deleteUser.setVisibility(View.GONE);
+        }else{
+            //Vamos obteniendo mail por mail
+            final AppUser user = this.users.get(position);
+            //Enlazamos los elementos de la vista con el modelo
+            holder.name.setText("name"+user.name+position);
+            holder.id.setText("-id-+position");
+            holder.deleteUser.setText("Remove"+position);
+
+            holder.deleteUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (users.size() > 0){
+                        users.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(0, users.size());
+                    }
+                }
+            });
         }
 
 
@@ -136,6 +147,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     }
 
 
+
     @Override
     public int getItemCount() {
         if (isGroup){
@@ -144,6 +156,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             return users.size();
         }
     }
+
+
     public int getRandomColor() {
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));

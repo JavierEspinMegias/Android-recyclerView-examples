@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Insercion de datos en users y creacion
-        adapterUsers = new SimpleAdapter(users, false, groups, false);
+        adapterUsers = new SimpleAdapter(users);
         recyclerUsers.setAdapter(adapterUsers);
 
 
@@ -91,8 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void boton2 (View v){
-        users.remove(0);
-        adapterUsers.notifyItemRemoved(0);
+        if (users.size() > 0){
+            users.remove(0);
+            adapterUsers.notifyItemRemoved(0);
+        }
     }
 
 
