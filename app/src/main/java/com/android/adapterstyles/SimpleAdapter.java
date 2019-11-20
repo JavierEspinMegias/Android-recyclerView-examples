@@ -21,17 +21,25 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
 
     private ArrayList<AppUser> users;
+    private ArrayList<AppGroup> groups;
+
     public boolean isIcon = false;
+    public boolean isGroup = false;
 
     public SimpleAdapter(ArrayList<AppUser> users) {
         this.users = users;
     }
 
     //El constructor deberá enlazar los datos del modelos con los del controlador
-    public SimpleAdapter(ArrayList<AppUser> users, boolean isAnIcon) {
+    public SimpleAdapter(ArrayList<AppUser> users, boolean isAnIcon, ArrayList<AppGroup> groups, boolean isGroup) {
         this.users = users;
         isIcon = isAnIcon;
+
+        this.groups = groups;
+        this.isGroup = isGroup;
     }
+
+
 
     //En un adaptador es obligatorio definir una clase que herede de RecyclerView.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,11 +52,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         //Su constructor debera enlazar las variables del controlador con la vista
         public ViewHolder(final View itemView) {
             super(itemView);
+
             this.name = (TextView) itemView.findViewById(R.id.user_name);
             this.id = (TextView) itemView.findViewById(R.id.user_id);
             this.deleteUser=(Button)itemView.findViewById(R.id.custom_buttom_1);
             this.imageUser = (ImageView)itemView.findViewById(R.id.image_view_adapter);
-
         }
     }
 
@@ -89,6 +97,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             }
         });
 
+        if (isGroup){
+            final  AppGroup group = this.groups.get(position);
+            holder.name.setText(group.getName()+position);
+        }
+
 
 //        int newColor = getRandomColor();
 //        holder.deleteUser.setTextColor(newColor);
@@ -125,7 +138,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return users.size();
+        if (isGroup){
+            return groups.size();
+        }else{
+            return users.size();
+        }
     }
     public int getRandomColor() {
         Random rnd = new Random();

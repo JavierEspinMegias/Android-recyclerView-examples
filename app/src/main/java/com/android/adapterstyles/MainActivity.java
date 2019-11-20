@@ -8,13 +8,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,8 +19,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AppUser> users = new ArrayList<AppUser>();
     private ArrayList<AppGroup> groups = new ArrayList<>();
 
-    private SimpleAdapter adapter;
-    private RecyclerView adapterUsers;
+    private SimpleAdapter adapterUsers;
+    private SimpleAdapter adapterGroups;
+
+    private RecyclerView recyclerUsers;
+    private RecyclerView recyclerGroups;
+
     private Button boton1, boton2, boton3, boton5, boton4;
     private int pos, posLay;
     private LinearLayout layoutPadre;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         this.boton1 = (Button)findViewById(R.id.boton1);
         this.boton2 = (Button)findViewById(R.id.boton2);
         this.boton3 = (Button)findViewById(R.id.boton3);
@@ -43,8 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         /// Identificacion y disenyo de adaptador
-        adapterUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
-        adapterUsers.setLayoutManager(new LinearLayoutManager(this));
+        recyclerUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
+        recyclerUsers.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+        recyclerGroups = (RecyclerView) findViewById(R.id.recyclerViewGroups);
+        recyclerGroups.setLayoutManager(new LinearLayoutManager(this));
 
         for (int i = 0; i < 10; i++) {
             AppUser newUser = new AppUser();
@@ -53,13 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 5; i++) {
             AppGroup newGroup = new AppGroup();
+            newGroup.name = "group"+i;
             groups.add(newGroup);
         }
 
 
         // Insercion de datos en users y creacion
-        adapter = new SimpleAdapter(users, false);
-        adapterUsers.setAdapter(adapter);
+        adapterUsers = new SimpleAdapter(users, false, groups, false);
+        recyclerUsers.setAdapter(adapterUsers);
+
+
+        adapterGroups = new SimpleAdapter(users,false, groups, true);
+        recyclerGroups.setAdapter(adapterGroups);
 
 
     }
@@ -74,34 +86,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void boton1 (View v){
         users.add(new AppUser());
-        adapter.notifyItemChanged(users.size());
+        adapterUsers.notifyItemChanged(users.size());
     }
 
 
     public void boton2 (View v){
         users.remove(0);
-        adapter.notifyItemRemoved(0);
+        adapterUsers.notifyItemRemoved(0);
     }
 
 
     public void boton3 (View v){
-        adapterUsers.setLayoutManager(new GridLayoutManager(this, 4));
-        adapter = new SimpleAdapter(users, false);
-        adapterUsers.setAdapter(adapter);
+        recyclerUsers.setLayoutManager(new GridLayoutManager(this, 4));
+        adapterUsers = new SimpleAdapter(users, false, groups, false);
+        recyclerUsers.setAdapter(adapterUsers);
     }
 
 
     public void boton4 (View v){
         if (pos == 0){
-            adapterUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
-            adapter = new SimpleAdapter(users, false);
-            adapterUsers.setAdapter(adapter);
+            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
+            adapterUsers = new SimpleAdapter(users, false, groups, false);
+            recyclerUsers.setAdapter(adapterUsers);
             pos = 1;
 
         }else{
-            adapterUsers.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
-            adapter = new SimpleAdapter(users, false);
-            adapterUsers.setAdapter(adapter);
+            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+            adapterUsers = new SimpleAdapter(users, false, groups, false);
+            recyclerUsers.setAdapter(adapterUsers);
             pos = 0;
         }
     }
@@ -109,20 +121,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void boton5 (View v){
         if (pos == 0){
-            adapterUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-            adapter = new SimpleAdapter(users, false);
-            adapterUsers.setAdapter(adapter);
+            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+            adapterUsers = new SimpleAdapter(users, false, groups, false);
+            recyclerUsers.setAdapter(adapterUsers);
             pos = 1;
         }else{
-            adapterUsers.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-            adapter = new SimpleAdapter(users, false);
-            adapterUsers.setAdapter(adapter);
+            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+            adapterUsers = new SimpleAdapter(users, false, groups, false);
+            recyclerUsers.setAdapter(adapterUsers);
             pos = 0;
         }
     }
 
     public void goRandom (View v){
         Random rnd = new Random();
-        adapterUsers.scrollToPosition(rnd.nextInt(users.size()));
+        recyclerUsers.scrollToPosition(rnd.nextInt(users.size()));
     }
 }
