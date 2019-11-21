@@ -100,60 +100,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void boton1 (View v){
-//        users.add(new AppUser());
-//        adapterGroups.notifyItemChanged(users.size());
-//    }
-//
-//
-//    public void boton2 (View v){
-//        if (users.size() > 0){
-//            users.remove(0);
-//            adapterGroups.notifyItemRemoved(0);
-//        }
-//    }
-//
-//
-//    public void boton3 (View v){
-//        recyclerGroups.setLayoutManager(new GridLayoutManager(this, 4));
-//        adapterGroups = new GroupAdapter(groups, users);
-//        recyclerGroups.setAdapter(adapterGroups);
-//    }
-//
-//
-//    public void boton4 (View v){
-//        if (pos == 0){
-//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
-//            adapterGroups = new GroupAdapter(groups, users);
-//            recyclerGroups.setAdapter(adapterGroups);
-//            pos = 1;
-//
-//        }else{
-//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
-//            adapterGroups = new GroupAdapter(groups, users);
-//            recyclerGroups.setAdapter(adapterGroups);
-//            pos = 0;
-//        }
-//    }
-//
-//
-//    public void boton5 (View v){
-//        if (pos == 0){
-//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-//            adapterGroups = new GroupAdapter(groups, users);
-//            recyclerGroups.setAdapter(adapterGroups);
-//            pos = 1;
-//        }else{
-//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-//            adapterGroups = new GroupAdapter(groups, users);
-//            recyclerGroups.setAdapter(adapterGroups);
-//            pos = 0;
-//        }
-//    }
-//
-//    public void goRandom (View v){
-//        Random rnd = new Random();
-//        recyclerGroups.scrollToPosition(rnd.nextInt(groups.size()));
-//    }
+    public void boton1 (View v){
+        users.add(new AppUser());
+        adapterGroups.notifyItemChanged(users.size());
+    }
+
+
+    public void boton2 (View v){
+        if (users.size() > 0){
+            users.remove(0);
+            adapterGroups.notifyItemRemoved(0);
+        }
+    }
+
+
+    public void boton3 (View v){
+        recyclerGroups.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerGroups.setAdapter(adapterGroups);
+    }
+
+
+    public void boton4 (View v){
+        if (pos == 0){
+            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
+            recyclerGroups.setAdapter(adapterGroups);
+            pos = 1;
+
+        }else{
+            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+            recyclerGroups.setAdapter(adapterGroups);
+            pos = 0;
+        }
+    }
+
+
+    public void boton5 (View v){
+        if (pos == 0){
+            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+            recyclerGroups.setAdapter(adapterGroups);
+            pos = 1;
+        }else{
+            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+            recyclerGroups.setAdapter(adapterGroups);
+            pos = 0;
+        }
+    }
+
+    public void goRandom (View v){
+        Random rnd = new Random();
+        recyclerGroups.scrollToPosition(rnd.nextInt(groups.size()));
+    }
 
 }
