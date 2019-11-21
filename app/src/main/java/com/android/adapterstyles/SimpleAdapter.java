@@ -97,9 +97,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             //Vamos obteniendo mail por mail
             final AppUser user = this.users.get(position);
             //Enlazamos los elementos de la vista con el modelo
-            holder.name.setText("User"+user.name+position);
+            holder.name.setText(""+user.name+position);
             holder.id.setText("-id-+position");
-            holder.deleteUser.setText("Remove"+position);
+            holder.deleteUser.setText("Eliminar"+position);
 
             holder.deleteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,37 +112,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 }
             });
         }
-
-
-//        int newColor = getRandomColor();
-//        holder.deleteUser.setTextColor(newColor);
-//
-//        if (isColorDark(newColor)){
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                holder.iconLetter.setTextColor(holder.itemView.getContext().getColor(R.color.colorAccent));
-//            }
-//
-//        }else{
-////            viewHolder.deleteUser.setBackgroundColor(viewHolder.deleteUser.getContext().getColor(R.color.colorPrimaryDark));
-//        }
-//
-//        if (isIcon){
-//            holder.iconLetter.setVisibility(View.VISIBLE);
-//            holder.imageUser.setVisibility(View.GONE);
-//            Drawable buttonDrawable = holder.iconLetter.getBackground();
-//            buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-//            DrawableCompat.setTint(buttonDrawable, newColor);
-//            holder.iconLetter.setBackground(buttonDrawable);
-//
-//            holder.iconLetter.setText(""+user.name.charAt(0));
-//
-//            holder.layoutOrientation.setOrientation(LinearLayout.HORIZONTAL);
-//
-//        }else {
-//            holder.imageUser.setVisibility(View.VISIBLE);
-//            holder.layoutOrientation.setOrientation(LinearLayout.VERTICAL);
-//            holder.iconLetter.setVisibility(View.GONE);
-//        }
 
     }
 

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 adapterUsers = new SimpleAdapter(users);
                 adapterUsers.notifyItemRangeChanged(0,users.size());
                 recyclerUsers.setAdapter(adapterUsers);
-                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" usuarios del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
 
             }
         });
