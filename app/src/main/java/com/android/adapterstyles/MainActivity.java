@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AppUser> users = new ArrayList<AppUser>();
     private ArrayList<AppGroup> groups = new ArrayList<>();
 
-    private SimpleAdapter adapterUsers;
-    private SimpleAdapter adapterGroups;
-
-    private RecyclerView recyclerUsers;
+    private GroupAdapter adapterGroups;
     private RecyclerView recyclerGroups;
+
+    private SimpleAdapter adapterUsers;
+    private RecyclerView recyclerUsers;
+
 
     private Button boton1, boton2, boton3, boton5, boton4;
     private int pos, posLay;
@@ -45,98 +48,112 @@ public class MainActivity extends AppCompatActivity {
 
 
         /// Identificacion y disenyo de adaptador
-        recyclerUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
-        recyclerUsers.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-        recyclerGroups = (RecyclerView) findViewById(R.id.recyclerViewGroups);
+        recyclerGroups = (RecyclerView) findViewById(R.id.recyclerView1);
         recyclerGroups.setLayoutManager(new LinearLayoutManager(this));
 
-        for (int i = 0; i < 10; i++) {
-            AppUser newUser = new AppUser();
-            users.add(newUser);
-        }
+        /// Identificacion y disenyo de adaptador
+        recyclerUsers = (RecyclerView) findViewById(R.id.recyclerView2);
+        recyclerUsers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
 
         for (int i = 0; i < 5; i++) {
             AppGroup newGroup = new AppGroup();
-            newGroup.name = "group"+i;
+            newGroup.name = "group "+i;
+            ArrayList<AppUser> newUserList = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                AppUser newUser = new AppUser();
+                newUser.setName("User "+newGroup.getName());
+                newUserList.add(newUser);
+            }
+            newGroup.setUsers(newUserList);
             groups.add(newGroup);
         }
 
 
         // Insercion de datos en users y creacion
+//        adapterUsers = new SimpleAdapter(users);
+//        recyclerUsers.setAdapter(adapterUsers);
+
+
         adapterUsers = new SimpleAdapter(users);
         recyclerUsers.setAdapter(adapterUsers);
 
 
-        adapterGroups = new SimpleAdapter(users,false, groups, true);
+        // Adaptacion para listener
+        adapterGroups = new GroupAdapter(this,groups, new GroupAdapter.GroupsListener() {
+            @Override
+            public void onClicked(AppGroup group) {
+                // Insercion de datos en users y creacionusers = group.getUsers();
+                users = group.getUsers();
+                adapterUsers = new SimpleAdapter(users);
+                adapterUsers.notifyItemRangeChanged(0,users.size());
+                recyclerUsers.setAdapter(adapterUsers);
+                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         recyclerGroups.setAdapter(adapterGroups);
 
 
     }
 
 
+//    public void boton1 (View v){
+//        users.add(new AppUser());
+//        adapterGroups.notifyItemChanged(users.size());
+//    }
+//
+//
+//    public void boton2 (View v){
+//        if (users.size() > 0){
+//            users.remove(0);
+//            adapterGroups.notifyItemRemoved(0);
+//        }
+//    }
+//
+//
+//    public void boton3 (View v){
+//        recyclerGroups.setLayoutManager(new GridLayoutManager(this, 4));
+//        adapterGroups = new GroupAdapter(groups, users);
+//        recyclerGroups.setAdapter(adapterGroups);
+//    }
+//
+//
+//    public void boton4 (View v){
+//        if (pos == 0){
+//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
+//            adapterGroups = new GroupAdapter(groups, users);
+//            recyclerGroups.setAdapter(adapterGroups);
+//            pos = 1;
+//
+//        }else{
+//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+//            adapterGroups = new GroupAdapter(groups, users);
+//            recyclerGroups.setAdapter(adapterGroups);
+//            pos = 0;
+//        }
+//    }
+//
+//
+//    public void boton5 (View v){
+//        if (pos == 0){
+//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+//            adapterGroups = new GroupAdapter(groups, users);
+//            recyclerGroups.setAdapter(adapterGroups);
+//            pos = 1;
+//        }else{
+//            recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+//            adapterGroups = new GroupAdapter(groups, users);
+//            recyclerGroups.setAdapter(adapterGroups);
+//            pos = 0;
+//        }
+//    }
+//
+//    public void goRandom (View v){
+//        Random rnd = new Random();
+//        recyclerGroups.scrollToPosition(rnd.nextInt(groups.size()));
+//    }
 
-
-
-
-
-
-
-    public void boton1 (View v){
-        users.add(new AppUser());
-        adapterUsers.notifyItemChanged(users.size());
-    }
-
-
-    public void boton2 (View v){
-        if (users.size() > 0){
-            users.remove(0);
-            adapterUsers.notifyItemRemoved(0);
-        }
-    }
-
-
-    public void boton3 (View v){
-        recyclerUsers.setLayoutManager(new GridLayoutManager(this, 4));
-        adapterUsers = new SimpleAdapter(users, false, groups, false);
-        recyclerUsers.setAdapter(adapterUsers);
-    }
-
-
-    public void boton4 (View v){
-        if (pos == 0){
-            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
-            adapterUsers = new SimpleAdapter(users, false, groups, false);
-            recyclerUsers.setAdapter(adapterUsers);
-            pos = 1;
-
-        }else{
-            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
-            adapterUsers = new SimpleAdapter(users, false, groups, false);
-            recyclerUsers.setAdapter(adapterUsers);
-            pos = 0;
-        }
-    }
-
-
-    public void boton5 (View v){
-        if (pos == 0){
-            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-            adapterUsers = new SimpleAdapter(users, false, groups, false);
-            recyclerUsers.setAdapter(adapterUsers);
-            pos = 1;
-        }else{
-            recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-            adapterUsers = new SimpleAdapter(users, false, groups, false);
-            recyclerUsers.setAdapter(adapterUsers);
-            pos = 0;
-        }
-    }
-
-    public void goRandom (View v){
-        Random rnd = new Random();
-        recyclerUsers.scrollToPosition(rnd.nextInt(users.size()));
-    }
 }

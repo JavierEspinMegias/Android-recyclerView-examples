@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,14 +24,28 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder>{
 
     private ArrayList<AppUser> users;
     private ArrayList<AppGroup> groups;
+    private RecyclerView recyUsers;
+    private SimpleAdapter adapUsers;
+    private Context context;
+
+    private final GroupsListener groupsListener;
+
+    public interface GroupsListener {
+        void onClicked(AppGroup group);
+    }
 
 
-    public GroupAdapter(ArrayList<AppGroup> groups) {
+
+    public GroupAdapter(Context activity, ArrayList<AppGroup> groups, GroupsListener groupsListener) {
+        this.groupsListener = groupsListener;
         this.groups = groups;
+        this.context=activity;
+
     }
 
     //El constructor deberá enlazar los datos del modelos con los del controlador
-    public GroupAdapter(ArrayList<AppUser> users, ArrayList<AppGroup> groups) {
+    public GroupAdapter(Context activity, ArrayList<AppGroup> groups, ArrayList<AppUser> users, GroupsListener groupsListener) {
+        this.groupsListener = groupsListener;
         this.users = users;
         this.groups = groups;
     }
@@ -55,30 +70,38 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder>{
             this.buttonGroup=(Button)itemView.findViewById(R.id.custom_buttom_1);
             this.imageGroup = (ImageView)itemView.findViewById(R.id.image_view_adapter);
             this.background = (LinearLayout)itemView.findViewById(R.id.adapter_linear_layout);
+
         }
     }
 
     @NonNull
     @Override
-    public GroupAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GroupAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         //Especificamos el fichero XML que se utilizará como vista
         View contactView = inflater.inflate(R.layout.adapter_groups, parent, false);
         ViewHolder viewHolder = new ViewHolder(contactView);
-
-
         return viewHolder;
+
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull GroupAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(GroupAdapter.ViewHolder holder, final int position) {
         final  AppGroup group = this.groups.get(position);
         holder.name.setText(group.getName()+position);
         holder.name.setTextSize(24);
-        holder.buttonGroup.setVisibility(View.GONE);
+
+
+        holder.buttonGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                groupsListener.onClicked(groups.get(position));
+            }
+        });
+
     }
 
 

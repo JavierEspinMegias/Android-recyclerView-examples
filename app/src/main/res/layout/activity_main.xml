@@ -100,7 +100,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewUsers"
+        android:id="@+id/recyclerView1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:backgroundTint="#A1DBDBDB"
@@ -119,7 +119,7 @@
         app:layout_constraintGuide_percent="0.625171" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewGroups"
+        android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:backgroundTint="#A1DBDBDB"
