@@ -11,15 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.logging.Handler;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder>{
 
@@ -154,7 +151,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition){
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right_from_small_y);
 
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
