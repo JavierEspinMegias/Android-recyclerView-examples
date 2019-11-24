@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,9 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Handler;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder>{
 
+
+    private int lastPosition = -1;
 
     private ArrayList<AppUser> users;
     private ArrayList<AppGroup> groups;
@@ -111,6 +116,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                     }
                 }
             });
+
+
+            // Aplicamos la animacion una vez determinada cual va a ser la vista de cada elemento
+            setAnimation(holder.itemView, position);
+            lastPosition = position;
         }
 
     }
@@ -138,6 +148,16 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             return false;
         }else{
             return true;
+        }
+    }
+    private void setAnimation(View viewToAnimate, int position){
+
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right);
+
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 }
