@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         /// Identificacion y disenyo de adaptador
         recyclerUsers = (RecyclerView) findViewById(R.id.recyclerView2);
-        recyclerUsers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
 
 
 
