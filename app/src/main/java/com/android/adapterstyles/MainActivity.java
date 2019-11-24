@@ -49,11 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         /// Identificacion y disenyo de adaptador
         recyclerGroups = (RecyclerView) findViewById(R.id.recyclerView1);
-        recyclerGroups.setLayoutManager(new LinearLayoutManager(this));
+        recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
 
         /// Identificacion y disenyo de adaptador
         recyclerUsers = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+        // USE OF CENTER USER LAYOUT ZOOM
+        recyclerUsers.setLayoutManager(new CenterUserLayout(getApplicationContext()));
 
 
 
@@ -89,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 adapterUsers = new SimpleAdapter(users);
                 adapterUsers.notifyItemRangeChanged(0,users.size());
                 recyclerUsers.setAdapter(adapterUsers);
-                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" usuarios del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
 
+                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" usuarios del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 

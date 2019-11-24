@@ -93,6 +93,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder>{
         final  AppGroup group = this.groups.get(position);
         holder.name.setText(group.getName());
         holder.name.setTextSize(24);
+        holder.imageGroup.setVisibility(View.GONE);
 
 
         holder.buttonGroup.setOnClickListener(new View.OnClickListener() {
