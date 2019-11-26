@@ -28,6 +28,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
     public boolean isIcon = false;
     public boolean isGroup = false;
+    public int[]  animations = new int[]{
+            R.anim.user_down_to_up,
+            R.anim.user_left_to_right,
+            R.anim.user_left_to_right_big_to_small,
+            R.anim.user_left_to_right_from_big_x,
+            R.anim.user_left_to_right_from_big_y,
+            R.anim.user_left_to_right_from_small_y,
+            R.anim.user_left_to_right_small_to_big,
+            R.anim.user_right_to_left,
+            R.anim.user_right_to_left_from_small_x,
+            R.anim.user_up_to_down
+    };
 
     public SimpleAdapter(ArrayList<AppUser> users) {
         this.users = users;
@@ -147,11 +159,15 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             return true;
         }
     }
+
     private void setAnimation(View viewToAnimate, int position){
+
+        Random rnd = new Random();
+
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition){
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right_from_small_y);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), animations[rnd.nextInt(animations.length-1)]);
 
             viewToAnimate.startAnimation(animation);
             lastPosition = position;

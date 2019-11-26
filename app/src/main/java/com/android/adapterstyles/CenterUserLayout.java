@@ -88,4 +88,5 @@ public class CenterUserLayout extends LinearLayoutManager {
             return 0;
         }
     }
+
 }
