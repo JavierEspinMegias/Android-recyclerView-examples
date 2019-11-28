@@ -167,7 +167,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition){
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), animations[rnd.nextInt(animations.length-1)]);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right);
 
             viewToAnimate.startAnimation(animation);
             lastPosition = position;

@@ -10,5 +10,5 @@
                 android:duration="700"
                 android:interpolator="@android:anim/accelerate_interpolator"
                 />
-
+    
 </set>

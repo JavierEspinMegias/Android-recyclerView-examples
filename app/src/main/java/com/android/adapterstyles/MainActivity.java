@@ -1,13 +1,17 @@
 package com.android.adapterstyles;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -32,10 +36,22 @@ public class MainActivity extends AppCompatActivity {
     private int pos, posLay;
     private LinearLayout layoutPadre;
 
+    private ConstraintLayout constraintLayout;
+    private AnimationDrawable animationDrawable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        constraintLayout = (ConstraintLayout) findViewById(R.id.main_constraint);
+        animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2000);
+
+
 
         this.boton1 = (Button)findViewById(R.id.boton1);
         this.boton2 = (Button)findViewById(R.id.boton2);
@@ -45,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         this.pos = 0;
         this.posLay = 0;
         this.layoutPadre = (LinearLayout)findViewById(R.id.adapter_linear_layout);
+
 
 
         /// Identificacion y disenyo de adaptador
@@ -92,13 +109,29 @@ public class MainActivity extends AppCompatActivity {
                 adapterUsers.notifyItemRangeChanged(0,users.size());
                 recyclerUsers.setAdapter(adapterUsers);
 
-                Toast.makeText(MainActivity.this, "Has seleccionado "+group.getUsers().size()+" usuarios del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Has seleccionado "+
+                        group.getUsers().size()+" usuarios del grupo "+group.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
         recyclerGroups.setAdapter(adapterGroups);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (animationDrawable != null && !animationDrawable.isRunning()) {
+            animationDrawable.start();
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (animationDrawable != null && animationDrawable.isRunning()) {
+            animationDrawable.stop();
+        }
     }
 
 
