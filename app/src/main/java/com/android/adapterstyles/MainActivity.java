@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -117,6 +120,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerGroups.setAdapter(adapterGroups);
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.options_camera:
+                Toast.makeText(this, "Pushed camera options", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.options_gallery:
+                Toast.makeText(this, "Pushed gallery options", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                Toast.makeText(this, "Pushed another options", Toast.LENGTH_SHORT).show();
+                return true;
+        }
     }
 
     @Override
