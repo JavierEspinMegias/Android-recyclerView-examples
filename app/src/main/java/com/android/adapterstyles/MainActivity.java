@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerUsers;
 
 
-    private Button boton1, boton2, boton3, boton5;
+    private Button boton1, boton2, boton3, boton5, boton4;
     private int pos, posLay;
     private LinearLayout layoutPadre;
 

@@ -2,6 +2,10 @@ package com.android.adapterstyles;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.transition.ChangeBounds;
+import android.transition.ChangeImageTransform;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +65,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         //La clase ViewHolder hará referencia a los elementos de la vista creada para el recycler view
         public TextView name;
         public TextView id;
-        private Button deleteUser;
+        private Button deleteUser, openUser;
         public ImageView imageUser;
         public LinearLayout background;
 
@@ -72,6 +76,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             this.name = (TextView) itemView.findViewById(R.id.user_name);
             this.id = (TextView) itemView.findViewById(R.id.user_id);
             this.deleteUser=(Button)itemView.findViewById(R.id.custom_buttom_1);
+            this.deleteUser=(Button)itemView.findViewById(R.id.custom_buttom_2);
             this.imageUser = (ImageView)itemView.findViewById(R.id.image_view_adapter);
             this.background = (LinearLayout)itemView.findViewById(R.id.adapter_linear_layout);
         }
@@ -126,6 +131,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 }
             });
 
+            holder.openUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
 
             // Aplicamos la animacion una vez determinada cual va a ser la vista de cada elemento
             setAnimation(holder.itemView, position);
@@ -172,5 +184,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+    private void openAnimation(View viewToAnimate, int position){
+
+
     }
 }
