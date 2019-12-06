@@ -16,25 +16,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:id="@+id/linear_title">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/round_card"
-            android:padding="6dp">
+            android:gravity="center_vertical|center_horizontal"
+            android:transitionName="imageTransition"
+            android:padding="6dp"
+            android:id="@+id/relative_single_user">
 
             <ImageView
                 android:layout_gravity="top"
                 android:id="@+id/image_view_adapter"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:transitionName="imageTransition"
                 android:src="@mipmap/android_photo_round"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-        </LinearLayout>
+        </RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,9 +75,10 @@
 
             <Button
                 android:id="@+id/custom_buttom_1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_weight="0.3"
                 android:padding="6dp"
                 android:background="@drawable/round_card"
                 android:inputType="text"
@@ -84,17 +91,19 @@
 
         </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="right"
-        android:layout_gravity="right">
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:id="@+id/linear_open_close">
 
         <Button
             android:id="@+id/custom_buttom_2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_weight="0.5"
             android:background="@drawable/round_card"
             android:inputType="textShortMessage"
             android:text="abrir"
@@ -107,9 +116,10 @@
 
         <Button
             android:id="@+id/custom_buttom_3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_weight="0.5"
             android:background="@drawable/round_card"
             android:inputType="textShortMessage"
             android:text="cerrar"
@@ -125,15 +135,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/textLorem">
 
         <TextView
-            android:id="@+id/textLorem"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:inputType="textMultiLine"
             android:text="@string/lorem"
-            android:visibility="gone" />
+            android:visibility="visible"/>
     </LinearLayout>
 </LinearLayout>

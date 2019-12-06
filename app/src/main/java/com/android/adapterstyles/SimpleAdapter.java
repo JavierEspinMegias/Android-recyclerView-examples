@@ -2,12 +2,16 @@ package com.android.adapterstyles;
 
 import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.transition.ChangeBounds;
 import android.transition.ChangeImageTransform;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,11 +78,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     //En un adaptador es obligatorio definir una clase que herede de RecyclerView.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         //La clase ViewHolder hará referencia a los elementos de la vista creada para el recycler view
-        public TextView name, text;
+        public TextView name;
         public TextView id;
         private Button deleteUser, openUser, closeUser;
+        public LinearLayout background, titleBackground, openCloseBackground, text;
+
+        public RelativeLayout relativeSingleLayout;
         public ImageView imageUser;
-        public LinearLayout background;
 
         //Su constructor debera enlazar las variables del controlador con la vista
         public ViewHolder(final View itemView) {
@@ -91,7 +97,10 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             this.closeUser=(Button)itemView.findViewById(R.id.custom_buttom_3);
             this.imageUser = (ImageView)itemView.findViewById(R.id.image_view_adapter);
             this.background = (LinearLayout)itemView.findViewById(R.id.adapter_linear_layout);
-            this.text = (TextView)itemView.findViewById(R.id.textLorem);
+            this.titleBackground = (LinearLayout)itemView.findViewById(R.id.linear_title);
+            this.openCloseBackground = (LinearLayout)itemView.findViewById(R.id.linear_open_close);
+            this.text = (LinearLayout)itemView.findViewById(R.id.textLorem);
+            this.relativeSingleLayout = (RelativeLayout)itemView.findViewById(R.id.relative_single_user);
         }
     }
 
@@ -144,15 +153,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 }
             });
 
-
-
+            holder.text.setVisibility(View.GONE);
             holder.openUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     expand_layout(holder.background.findViewById(R.id.adapter_linear_layout),1000,800);
-
-                    holder.text.setVisibility(View.VISIBLE);
                     holder.text.setAnimation(fadeInAnimation());
+                    holder.text.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -160,9 +167,23 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     holder.text.setAnimation(fadeOutAnimation());
-
                     collapse_layout(holder.background.findViewById(R.id.adapter_linear_layout),1000,400);
-                    holder.text.setVisibility(View.GONE);
+                }
+            });
+
+
+
+
+            holder.relativeSingleLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent goSingleUser = new Intent(holder.imageUser.getContext(), ViewSingleUser.class);
+
+                    Pair[] parejas = new Pair[1];
+                    parejas[0]= new Pair<View,String>(holder.imageUser,"imageTransition");
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.imageUser.getContext(), parejas);
+                    holder.imageUser.getContext().startActivity(goSingleUser, options.toBundle());
                 }
             });
 
@@ -186,42 +207,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     }
 
 
-    public int getRandomColor() {
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        return color;
-    }
-    public boolean isColorDark(int color){
-        double darkness = 1-(0.299*Color.red(color) + 0.587*Color.green(color) + 0.114*Color.blue(color))/255;
-        if(darkness<0.5){
-            return false;
-        }else{
-            return true;
-        }
-    }
 
     private void setAnimation(View viewToAnimate, int position){
-
-        Random rnd = new Random();
-
-
-        // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition){
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_up_to_down);
 
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
     }
-    private void openAnimation(View viewToAnimate, int position){
-        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.open_user);
-
-        viewToAnimate.startAnimation(animation);
-        lastPosition = position;
-
-    }
 
 
+    // LinearLayout ANIMATION
     public static void expand_layout(final View v, int duration, int targetHeight) {
 
         int prevHeight  = v.getHeight();
@@ -255,6 +252,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         valueAnimator.start();
     }
 
+    // Text ANIMATION
     public Animation fadeInAnimation(){
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -270,4 +268,26 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         return fadeOut;
     }
 
+
+
+    public int getRandomColor() {
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        return color;
+    }
+    public boolean isColorDark(int color){
+        double darkness = 1-(0.299*Color.red(color) + 0.587*Color.green(color) + 0.114*Color.blue(color))/255;
+        if(darkness<0.5){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    private void openAnimation(View viewToAnimate, int position){
+        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.open_user);
+
+        viewToAnimate.startAnimation(animation);
+        lastPosition = position;
+
+    }
 }
