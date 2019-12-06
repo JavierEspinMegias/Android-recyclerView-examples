@@ -10,6 +10,7 @@
     android:orientation="vertical"
     android:elevation="18dp"
     android:id="@+id/adapter_linear_layout"
+    android:transitionName="backTransition"
     android:animateLayoutChanges="true">
 
     <LinearLayout
@@ -143,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
+            android:transitionName="textTransition"
             android:text="@string/lorem"
             android:visibility="visible"/>
     </LinearLayout>

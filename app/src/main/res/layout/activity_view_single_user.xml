@@ -4,15 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewSingleUser">
+    tools:context=".ViewSingleUser"
+    android:background="@drawable/round_card"
+    android:layout_margin="12dp">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:transitionName="imageTransition"
-        android:src="@mipmap/android_photo_foreground"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="false" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:transitionName="backTransition">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:transitionName="imageTransition"
+            android:src="@mipmap/android_photo_foreground"
+            android:layout_margin="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="textTransition"
+            android:text="@string/lorem"
+            android:textSize="16dp"
+            android:layout_margin="12dp"/>
+
+    </LinearLayout>
 </RelativeLayout>

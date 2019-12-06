@@ -179,8 +179,10 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 public void onClick(View view) {
                     Intent goSingleUser = new Intent(holder.imageUser.getContext(), ViewSingleUser.class);
 
-                    Pair[] parejas = new Pair[1];
+                    Pair[] parejas = new Pair[3];
                     parejas[0]= new Pair<View,String>(holder.imageUser,"imageTransition");
+                    parejas[1]= new Pair<View,String>(holder.text,"textTransition");
+                    parejas[2]= new Pair<View,String>(holder.background,"backTransition");
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.imageUser.getContext(), parejas);
                     holder.imageUser.getContext().startActivity(goSingleUser, options.toBundle());
