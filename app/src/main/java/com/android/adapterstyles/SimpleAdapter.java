@@ -1,31 +1,60 @@
 package com.android.adapterstyles;
 
+import android.animation.LayoutTransition;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.transition.ChangeBounds;
+import android.transition.ChangeImageTransform;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder>{
 
+
+
+    private int lastPosition = -1;
 
     private ArrayList<AppUser> users;
     private ArrayList<AppGroup> groups;
 
     public boolean isIcon = false;
     public boolean isGroup = false;
+    public int[]  animations = new int[]{
+            R.anim.user_down_to_up,
+            R.anim.user_left_to_right,
+            R.anim.user_left_to_right_big_to_small,
+            R.anim.user_left_to_right_from_big_x,
+            R.anim.user_left_to_right_from_big_y,
+            R.anim.user_left_to_right_from_small_y,
+            R.anim.user_left_to_right_small_to_big,
+            R.anim.user_right_to_left,
+            R.anim.user_right_to_left_from_small_x,
+            R.anim.user_up_to_down
+    };
 
     public SimpleAdapter(ArrayList<AppUser> users) {
         this.users = users;
@@ -45,9 +74,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     //En un adaptador es obligatorio definir una clase que herede de RecyclerView.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         //La clase ViewHolder hará referencia a los elementos de la vista creada para el recycler view
-        public TextView name;
+        public TextView name, text;
         public TextView id;
-        private Button deleteUser;
+        private Button deleteUser, openUser, closeUser;
         public ImageView imageUser;
         public LinearLayout background;
 
@@ -58,8 +87,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             this.name = (TextView) itemView.findViewById(R.id.user_name);
             this.id = (TextView) itemView.findViewById(R.id.user_id);
             this.deleteUser=(Button)itemView.findViewById(R.id.custom_buttom_1);
+            this.openUser=(Button)itemView.findViewById(R.id.custom_buttom_2);
+            this.closeUser=(Button)itemView.findViewById(R.id.custom_buttom_3);
             this.imageUser = (ImageView)itemView.findViewById(R.id.image_view_adapter);
             this.background = (LinearLayout)itemView.findViewById(R.id.adapter_linear_layout);
+            this.text = (TextView)itemView.findViewById(R.id.textLorem);
         }
     }
 
@@ -84,7 +116,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
 
     @Override
-    public void onBindViewHolder(@NonNull SimpleAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SimpleAdapter.ViewHolder holder, final int position) {
 
 
         if (this.isGroup){
@@ -97,9 +129,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             //Vamos obteniendo mail por mail
             final AppUser user = this.users.get(position);
             //Enlazamos los elementos de la vista con el modelo
-            holder.name.setText("name"+user.name+position);
+            holder.name.setText(""+user.name+position);
             holder.id.setText("-id-+position");
-            holder.deleteUser.setText("Remove"+position);
+            holder.deleteUser.setText("Eliminar"+position);
 
             holder.deleteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,38 +143,34 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                     }
                 }
             });
+
+
+
+            holder.openUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    expand_layout(holder.background.findViewById(R.id.adapter_linear_layout),1000,800);
+
+                    holder.text.setVisibility(View.VISIBLE);
+                    holder.text.setAnimation(fadeInAnimation());
+                }
+            });
+
+            holder.closeUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.text.setAnimation(fadeOutAnimation());
+
+                    collapse_layout(holder.background.findViewById(R.id.adapter_linear_layout),1000,400);
+                    holder.text.setVisibility(View.GONE);
+                }
+            });
+
+
+            // Aplicamos la animacion una vez determinada cual va a ser la vista de cada elemento
+            setAnimation(holder.itemView, position);
+            lastPosition = position;
         }
-
-
-//        int newColor = getRandomColor();
-//        holder.deleteUser.setTextColor(newColor);
-//
-//        if (isColorDark(newColor)){
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                holder.iconLetter.setTextColor(holder.itemView.getContext().getColor(R.color.colorAccent));
-//            }
-//
-//        }else{
-////            viewHolder.deleteUser.setBackgroundColor(viewHolder.deleteUser.getContext().getColor(R.color.colorPrimaryDark));
-//        }
-//
-//        if (isIcon){
-//            holder.iconLetter.setVisibility(View.VISIBLE);
-//            holder.imageUser.setVisibility(View.GONE);
-//            Drawable buttonDrawable = holder.iconLetter.getBackground();
-//            buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-//            DrawableCompat.setTint(buttonDrawable, newColor);
-//            holder.iconLetter.setBackground(buttonDrawable);
-//
-//            holder.iconLetter.setText(""+user.name.charAt(0));
-//
-//            holder.layoutOrientation.setOrientation(LinearLayout.HORIZONTAL);
-//
-//        }else {
-//            holder.imageUser.setVisibility(View.VISIBLE);
-//            holder.layoutOrientation.setOrientation(LinearLayout.VERTICAL);
-//            holder.iconLetter.setVisibility(View.GONE);
-//        }
 
     }
 
@@ -171,4 +199,75 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             return true;
         }
     }
+
+    private void setAnimation(View viewToAnimate, int position){
+
+        Random rnd = new Random();
+
+
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.user_left_to_right);
+
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+    private void openAnimation(View viewToAnimate, int position){
+        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.open_user);
+
+        viewToAnimate.startAnimation(animation);
+        lastPosition = position;
+
+    }
+
+
+    public static void expand_layout(final View v, int duration, int targetHeight) {
+
+        int prevHeight  = v.getHeight();
+
+        v.setVisibility(View.VISIBLE);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                v.getLayoutParams().height = (int) animation.getAnimatedValue();
+                v.requestLayout();
+            }
+        });
+        valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
+    }
+    public static void collapse_layout(final View v, int duration, int targetHeight) {
+        int prevHeight  = v.getHeight();
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                v.getLayoutParams().height = (int) animation.getAnimatedValue();
+                v.requestLayout();
+            }
+        });
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
+    }
+
+    public Animation fadeInAnimation(){
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setStartOffset(200);
+        fadeIn.setDuration(1000);
+        return fadeIn;
+    }
+    public Animation fadeOutAnimation(){
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
+        fadeOut.setStartOffset(0);
+        fadeOut.setDuration(800);
+        return fadeOut;
+    }
+
 }
