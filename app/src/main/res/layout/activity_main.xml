@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.10807113"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -23,7 +23,6 @@
         android:layout_height="0dp"
         android:layout_margin="6dp"
         android:background="@drawable/round_card"
-        android:backgroundTint="@color/colorAccent"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
         android:padding="6dp"
@@ -118,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.47058824" />
+        app:layout_constraintGuide_percent="0.38" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"

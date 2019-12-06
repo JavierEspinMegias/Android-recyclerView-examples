@@ -15,7 +15,7 @@
         android:id="@+id/image_view_adapter"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.3"
         app:srcCompat="@mipmap/android_photo_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,8 @@
 
         <Button
             android:id="@+id/custom_buttom_1"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_margin="8dp"
             android:background="@drawable/round_button"

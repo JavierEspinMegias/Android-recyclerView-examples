@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerUsers = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerUsers.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
         // USE OF CENTER USER LAYOUT ZOOM
-        recyclerUsers.setLayoutManager(new CenterUserLayout(getApplicationContext()));
+//        recyclerUsers.setLayoutManager(new CenterUserLayout(getApplicationContext()));
+        recyclerUsers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
 
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 // Insercion de datos en users y creacionusers = group.getUsers();
                 users = group.getUsers();
                 adapterUsers = new SimpleAdapter(users);
-                adapterUsers.notifyItemRangeChanged(0,users.size());
+//                adapterUsers.notifyItemRangeChanged(0,users.size());
                 recyclerUsers.setAdapter(adapterUsers);
 
                 Toast.makeText(MainActivity.this, "Has seleccionado "+

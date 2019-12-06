@@ -30,6 +30,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder>{
 
     private final GroupsListener groupsListener;
 
+
     public interface GroupsListener {
         void onClicked(AppGroup group);
     }
