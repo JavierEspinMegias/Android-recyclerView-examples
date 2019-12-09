@@ -11,3 +11,7 @@
 		- RV text fade in and fade out
 		- RV item translations
 		- RV onScroll animations
+	# Splash Screen
+		- Animation class
+		- ObjectAnimator class
+		- Runnable recursive methods
