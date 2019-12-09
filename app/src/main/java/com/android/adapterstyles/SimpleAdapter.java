@@ -1,18 +1,12 @@
 package com.android.adapterstyles;
 
-import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.transition.ChangeBounds;
-import android.transition.ChangeImageTransform;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -153,11 +145,19 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 }
             });
 
-            holder.text.setVisibility(View.GONE);
+            expand_layout(holder.background.findViewById(R.id.adapter_linear_layout),0,400);
+            // Eliminamos el texto para que no ocupe espacio
+//            holder.text.setVisibility(View.GONE);
+
+            // Seteamos el boton que abrira el contenedor
             holder.openUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    // Llamamos al metodo para expandir nuestro contenedor
                     expand_layout(holder.background.findViewById(R.id.adapter_linear_layout),1000,800);
+
+                    // Animamos la visibilidad del texto
                     holder.text.setAnimation(fadeInAnimation());
                     holder.text.setVisibility(View.VISIBLE);
                 }
@@ -223,10 +223,19 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     // LinearLayout ANIMATION
     public static void expand_layout(final View v, int duration, int targetHeight) {
 
+        // Nos aseguramos de que la vista no este GONE o INVISIBLE
+        v.setVisibility(View.VISIBLE);
+
+        // Averiguamos la altura de la vista que le pasamos por parametros
         int prevHeight  = v.getHeight();
 
-        v.setVisibility(View.VISIBLE);
+
+        // Animador de valores - Podremos decirle los valores que queremos que cambien
+        // Son los mismos parametros que en los <set> de la carpeta Drawable
+        // pero t0do el proceso se hace programaticamente
         ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
+
+
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -234,10 +243,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
                 v.requestLayout();
             }
         });
+
+
+        // Seteamos un interpolador chulo
         valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        // Podremos cambiar mas parametros en esta instancia de valueAnimator
         valueAnimator.setDuration(duration);
+
+        // Activamos la animacion
         valueAnimator.start();
     }
+
     public static void collapse_layout(final View v, int duration, int targetHeight) {
         int prevHeight  = v.getHeight();
         ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
@@ -253,6 +270,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
+
 
     // Text ANIMATION
     public Animation fadeInAnimation(){
@@ -286,7 +304,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         }
     }
     private void openAnimation(View viewToAnimate, int position){
-        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.open_user);
+        Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.open_title);
 
         viewToAnimate.startAnimation(animation);
         lastPosition = position;

@@ -15,9 +15,9 @@
         android:transitionName="backTransition">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:transitionName="imageTransition"
-            android:src="@mipmap/android_photo_foreground"
+            android:src="@mipmap/bridge_background"
             android:layout_margin="12dp" />
 
         <TextView
@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:transitionName="textTransition"
             android:text="@string/lorem"
-            android:textSize="16dp"
             android:layout_margin="12dp"/>
 
     </LinearLayout>

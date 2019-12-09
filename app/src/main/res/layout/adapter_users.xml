@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    android:padding="6dp"
-    android:background="@drawable/round_card"
+    android:layout_margin="3dp"
+    android:padding="16dp"
+    android:background="@android:drawable/editbox_background"
     android:orientation="vertical"
     android:elevation="18dp"
     android:id="@+id/adapter_linear_layout"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:animateLayoutChanges="true"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical"
         android:id="@+id/linear_title">
 
         <RelativeLayout
@@ -37,7 +37,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:transitionName="imageTransition"
-                android:src="@mipmap/android_photo_round"
+                android:src="@mipmap/bridge_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -72,18 +72,14 @@
 
             </LinearLayout>
 
-
-
             <Button
                 android:id="@+id/custom_buttom_1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="0.3"
                 android:padding="6dp"
                 android:background="@drawable/round_card"
                 android:inputType="text"
-                android:textSize="20dp"
                 android:text="eliminar"
                 android:textColor="@color/colorAccent"
                 android:backgroundTint="@color/colorPrimary"
@@ -96,18 +92,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:layout_marginTop="12dp"
         android:layout_gravity="right"
         android:id="@+id/linear_open_close">
 
         <Button
             android:id="@+id/custom_buttom_2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@drawable/round_card"
             android:inputType="textShortMessage"
             android:text="abrir"
+            android:layout_marginRight="3dp"
             android:textColor="@color/colorAccent"
             android:backgroundTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,9 +114,9 @@
 
         <Button
             android:id="@+id/custom_buttom_3"
+            android:layout_marginLeft="3dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@drawable/round_card"
             android:inputType="textShortMessage"
@@ -129,8 +126,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
         </Button>
-
-
 
     </LinearLayout>
 

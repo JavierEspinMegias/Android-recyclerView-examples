@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="6dp"
     android:layout_margin="6dp"
-    android:background="@drawable/round_card"
+    android:background="@android:drawable/editbox_background"
     android:orientation="vertical"
     android:elevation="18dp"
     android:id="@+id/adapter_linear_layout">
