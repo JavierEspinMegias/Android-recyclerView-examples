@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="6dp"
     android:layout_margin="6dp"
-    android:background="@drawable/round_card"
+    android:background="@android:drawable/editbox_background"
     android:orientation="vertical"
     android:elevation="18dp"
     android:id="@+id/adapter_linear_layout">
@@ -53,11 +53,11 @@
 
         <Button
             android:id="@+id/custom_buttom_1"
-            android:layout_width="48dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_margin="8dp"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_card"
             android:backgroundTint="#C62196F3"
             android:elevation="24dp"
             android:inputType="text"
