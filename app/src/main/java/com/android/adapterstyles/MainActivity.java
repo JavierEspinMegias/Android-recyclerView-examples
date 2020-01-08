@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Toast.makeText(this, "git prueba", Toast.LENGTH_SHORT).show();
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.main_constraint);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
