@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         /// Identificacion y disenyo de adaptador
         recyclerGroups = (RecyclerView) findViewById(R.id.recyclerView1);
-        recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        recyclerGroups.setLayoutManager(new StaggeredGridLayoutManager(4,RecyclerView.VERTICAL));
 
         /// Identificacion y disenyo de adaptador
         recyclerUsers = (RecyclerView) findViewById(R.id.recyclerView2);
